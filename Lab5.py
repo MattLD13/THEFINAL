@@ -13,33 +13,32 @@ def main():
 	score = 0
 	pickedChoices = {}
 	choices = {}
+	fileExists = True
 
 
 	welcome_message()
 	fileName = get_initial_input()
+	questionsDict = read_file(fileName)
+	if(questionsDict == {}):
+		print("Sorry, the file \"" + fileName + "\" does not exist.")
+		fileExists = False
+		questionAmt = 10
 
 	while(questionAmt < 10):
-		questionsDict = read_file(fileName)
+		print("Question " + str(questionAmt + 1) + ":")
+
+			
 		#print(questionsDict)
 
 		chosenQuestion, pickedChoices  = pick_question(questionsDict, pickedChoices)
 
 
 		choices = pick_choices(chosenQuestion, questionsDict, pickedChoices)
-		
-
-		print("answer: ", sep = "")
-		print(chosenQuestion)
-		print()
-		print("choices: " , sep = "")
-		print(choices)
-
 
 		question = create_question(chosenQuestion, choices)
 		print(question)
 
 		chosenAnswer = get_question_input()
-
 
 		isCorrect = check_answer(chosenAnswer, choices, questionsDict, chosenQuestion)
 		
@@ -51,7 +50,8 @@ def main():
 
 		print()
 		questionAmt += 1
-	print("Score: " + str(score) + " / " + str(questionAmt))
+	if(fileExists): 
+		print("Score: " + str(score) + " / " + str(questionAmt))
 
 def welcome_message():
 	print("Welcome to the Quiz Game!")
@@ -87,9 +87,9 @@ def read_file(fileName):
 		questionsFile = fo.read()
 		fo.close()
 		questionDict = create_dict(questionsFile)
-		return questionDict
 	else:
-		print("Sorry, the file \'" + fileName + "\' does not exist.")
+		questionDict = {}
+	return questionDict
 
 def file_exists(fileName):
 	try:
@@ -112,7 +112,6 @@ def pick_random(length):
 	chosenNumber = random.randint(0, length - 1)
 	return chosenNumber
 
-
 def pick_question(questionDict, pickedChoices):
 	isLooping = True
 	while isLooping:
@@ -126,24 +125,34 @@ def pick_question(questionDict, pickedChoices):
 
 def pick_choices(chosenQuestion, questionsDict, pickedChoices):
 	choices = {}
-	
+	# pick 3 random choices
 	for i in range(3):
 		randomNum = pick_random(len(questionsDict))
+		# if the random number chosen is the same as the chosen question, pick again
 		while(randomNum == chosenQuestion):
 			randomNum = pick_random(len(questionsDict))
+		# if the choice has already been picked, pick again
+		while(questionsDict[list(questionsDict.keys())[randomNum]] in choices.values()):
+			randomNum = pick_random(len(questionsDict))
+
+		# add the choice to the choices dictionary
 		choices[list(questionsDict.keys())[randomNum]] = questionsDict[list(questionsDict.keys())[randomNum]]
 
+	# add the chosen question to the choices dictionary
 	choices[chosenQuestion] = questionsDict[chosenQuestion]
 
+	# convert the dictionary to a list so it can be shuffled
 	choices = list(choices.items())
 
+	# shuffle the list
 	for num in range(len(choices) - 1, 0, -1):
-		randNum = random.randint(0, i)
+		randNum = random.randint(0, num)
 		choices[num], choices[randNum] = choices[randNum], choices[num]
 
+	# convert the list back to a dictionary
 	choices = dict(choices)
 
-
+	print(choices)
 	return choices
 
 def create_question(chosenQuestion, choices):
