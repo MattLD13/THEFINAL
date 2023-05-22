@@ -140,7 +140,7 @@ def pick_choices(chosenQuestion, questionsDict):
 	# pick 3 random choices
 	while(isLooping):
 		randomChoice = pick_random(questionsDict, choices, isChoice)
-		if(randomChoice != chosenQuestion):
+		if(randomChoice != questionsDict[chosenQuestion]):
 			choices.append(randomChoice)
 		if(len(choices) == 3):
 			isLooping = False
