@@ -114,24 +114,28 @@ def create_dict(questions):
 def pick_random(questionDict, pickedQuestions):
 	isLooping = True
 
-	print("ahhhhhhh" + str(pickedQuestions))
-
 	while(isLooping):
-		randomChoice = random.randint(0, len(questionDict) - 1)
+		randomNumber = random.randint(0, len(questionDict) - 1)
+		randomChoice = list(questionDict.keys())[randomNumber]
+
+		print("Random Choice: " + randomChoice)
+
 		if(randomChoice not in pickedQuestions):
 			isLooping = False
 
-	chosenQuestion = list(questionDict.keys())[randomChoice]
-
-	return chosenQuestion
+	print("Picked Questions: " + str(pickedQuestions))
+	return randomChoice
 
 def pick_choices(chosenQuestion, questionsDict):
 	choices = []
+	isLooping = True
 	# pick 3 random choices
-	for i in range(3):
+	while(isLooping):
 		randomChoice = pick_random(questionsDict, choices)
 		if(randomChoice != chosenQuestion):
 			choices.append(questionsDict[randomChoice])
+		if(len(choices) == 3):
+			isLooping = False
 
 	randomChoice = random.randint(0, 3)
 	choices.insert(randomChoice, questionsDict[chosenQuestion])

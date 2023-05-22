@@ -3,7 +3,9 @@ def main():
 	questionDict = read_file("states.txt")
 
 	#print the 1st in the dictionary
-	print(list(questionDict.keys())[41])
+	#print(list(questionDict.keys())[41])
+
+	mattNeedsToCheckSomething(questionDict)
 
 def read_file(fileName):
 
@@ -21,6 +23,15 @@ def create_dict(questions):
 		questionDict[question[0]] = question[1]
 	return questionDict
 
+def mattNeedsToCheckSomething(questionDict):
+
+	choices = []
+
+
+	choices.append(questionDict["Alabama"])
+
+
+	print(choices)
 
 
 main()
