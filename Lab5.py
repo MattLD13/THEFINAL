@@ -14,6 +14,7 @@ def main():
 	pickedQuestions = []
 	choices = []
 	fileExists = True
+	isChoice = False
 
 	welcome_message()
 	fileName = get_initial_input()
@@ -26,7 +27,7 @@ def main():
 	while(questionAmt < 10):
 		print("Question " + str(questionAmt + 1) + ":")
 
-		chosenQuestion = pick_random(questionsDict, pickedQuestions)
+		chosenQuestion = pick_random(questionsDict, pickedQuestions, isChoice)
 
 		pickedQuestions.append(chosenQuestion)
 
@@ -111,14 +112,19 @@ def create_dict(questions):
 		questionDict[question[0]] = question[1]
 	return questionDict
 
-def pick_random(questionDict, pickedQuestions):
+def pick_random(questionDict, pickedQuestions, isChoice):
 	isLooping = True
 
 	while(isLooping):
 		randomNumber = random.randint(0, len(questionDict) - 1)
-		randomChoice = list(questionDict.keys())[randomNumber]
+		
+		if(isChoice):
+			randomChoice = list(questionDict.values())[randomNumber]
 
-		print("Random Choice: " + randomChoice)
+			print("Random Value: " + randomChoice)
+		else:
+			randomChoice = list(questionDict.keys())[randomNumber]
+			print("Random Key: " + randomChoice)
 
 		if(randomChoice not in pickedQuestions):
 			isLooping = False
@@ -129,11 +135,13 @@ def pick_random(questionDict, pickedQuestions):
 def pick_choices(chosenQuestion, questionsDict):
 	choices = []
 	isLooping = True
+	isChoice = True
+
 	# pick 3 random choices
 	while(isLooping):
-		randomChoice = pick_random(questionsDict, choices)
+		randomChoice = pick_random(questionsDict, choices, isChoice)
 		if(randomChoice != chosenQuestion):
-			choices.append(questionsDict[randomChoice])
+			choices.append(randomChoice)
 		if(len(choices) == 3):
 			isLooping = False
 
