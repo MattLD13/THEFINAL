@@ -15,7 +15,6 @@ def main():
 	choices = {}
 	fileExists = True
 
-
 	welcome_message()
 	fileName = get_initial_input()
 	questionsDict = read_file(fileName)
@@ -26,12 +25,10 @@ def main():
 
 	while(questionAmt < 10):
 		print("Question " + str(questionAmt + 1) + ":")
-
 			
 		#print(questionsDict)
 
 		chosenQuestion, pickedChoices  = pick_question(questionsDict, pickedChoices)
-
 
 		choices = pick_choices(chosenQuestion, questionsDict, pickedChoices)
 
@@ -178,4 +175,5 @@ def check_answer(chosenAnswer, choices, questionsDict, chosenQuestion):
 
 	return isCorrect
 
+#Calling Main
 main()
