@@ -135,14 +135,14 @@ def read_file(fileName):
 		fo.close()
 
 		# create a dictionary from the string using create_dict
-		questionDict = create_dict(questionsFile)
+		questionsDict = create_dict(questionsFile)
 
 	# if the file does not exist, create an empty dictionary
 	else:
-		questionDict = {}
+		questionsDict = {}
 
 	# return the dictionary
-	return questionDict
+	return questionsDict
 
 # check if the file exists
 def file_exists(fileName):
@@ -165,7 +165,7 @@ def file_exists(fileName):
 def create_dict(questions):
 
 	# create an empty dictionary
-	questionDict = {}
+	questionsDict = {}
 
 	# split the string into a list of questions
 	questions = questions.split("\n")
@@ -177,28 +177,31 @@ def create_dict(questions):
 		question = question.split(":")
 
 		# if the question is not empty, add it to the dictionary
-		questionDict[question[0]] = question[1]
+		questionsDict[question[0]] = question[1]
 
 	# return the dictionary
-	return questionDict
+	return questionsDict
 
 # pick a random question
-def pick_random(questionDict, pickedQuestions):
+def pick_random(questionsDict, pickedQuestions):
 	isLooping = True
+
+	print("pickedQuestions: " + str(pickedQuestions))
 
 	# while loop to pick a random question
 	while(isLooping):
 
 		# pick a random number between 0 and the length of the dictionary -1
-		randomNumber = random.randint(0, len(questionDict) - 1)
+		randomNumber = random.randint(0, len(questionsDict) - 1)
 		
-		randomChoice = list(questionDict.keys())[randomNumber]
+		# change the number to a key
+		randomChoice = list(questionsDict.keys())[randomNumber]
+
+		print("choice: " + randomChoice)
 
 		# if the random choice is not in the pickedQuestions dict, set isLooping to False
 		if(randomChoice not in pickedQuestions):
 			isLooping = False
-
-	print("choice: " + randomChoice)
 
 	# return the random choice
 	return randomChoice
@@ -214,11 +217,11 @@ def pick_choices(chosenQuestion, questionsDict):
 		# pick a random choice using pick_random
 		randomChoice = pick_random(questionsDict, choices)
 
-		# if the random choice is not the correct answer, add it to the choices list
-		if(randomChoice != questionsDict[chosenQuestion]):
+		#change the output from pick_random to a value instead of a key
+		randChoice = questionsDict[randomChoice]
 
-			#change the output from pick_random to a value instead of a key
-			randChoice = questionsDict[randomChoice]
+		# if the random choice is not the correct answer, add it to the choices list
+		if(randChoice != chosenQuestion):
 
 			# add the random choice to the choices list
 			choices.append(randChoice)
@@ -228,10 +231,12 @@ def pick_choices(chosenQuestion, questionsDict):
 			isLooping = False
 
 	# pick a random number between 0 and 3
-	anserPlacement = random.randint(0, 3)
+	answerPlacement = random.randint(0, 3)
+
+	print(questionsDict[chosenQuestion])
 
 	# insert the correct answer at a random index in the choices list
-	choices.insert(randomChoice, questionsDict[chosenQuestion])
+	choices.insert(answerPlacement, questionsDict[chosenQuestion])
 
 	# return the choices list
 	return choices
