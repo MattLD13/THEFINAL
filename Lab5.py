@@ -9,7 +9,9 @@
 #				 in the pick_random function. I have re-written this function 8 times at this point. I started off with a seperate 
 #				 pick_question function but realized that was not the correct design. I then re-wrote it with pick_random having special
 #				 cases for picking choices or questions. Eventually I settled on my current design which is abstracted and able to work for
-#				 both without any changes.
+#				 both without any changes. This was after going back to the drawing board and redoing a design specifically for the
+#				 pick_random function. I had it make a key and then in pick_choices it changes it to a value but becuase it is a key
+#				 it is a be to be tested easily.
 
 #IMPORTS
 import random
