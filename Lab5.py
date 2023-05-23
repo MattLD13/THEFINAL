@@ -12,7 +12,7 @@ def main():
 	# define variables
 	questionAmt = 0
 	score = 0
-	pickedQuestions = []
+	pickedQuestions = {}
 	choices = []
 	fileExists = True
 	isChoice = False
@@ -45,10 +45,10 @@ def main():
 		goodInput = False
 
 		# pick a random question using the pick_random
-		chosenQuestion = pick_random(questionsDict, pickedQuestions, isChoice)
+		chosenQuestion = pick_random(questionsDict, pickedQuestions)
 
-		# add the chosen question to the pickedQuestions list
-		pickedQuestions.append(chosenQuestion)
+		# add the chosen question to the pickedQuestions dict
+		pickedQuestions[chosenQuestion] = questionsDict[chosenQuestion]
 
 		# pick 3 random choices and 1 correct choice using pick_choices
 		choices = pick_choices(chosenQuestion, questionsDict)
@@ -174,7 +174,7 @@ def create_dict(questions):
 	return questionDict
 
 # pick a random question
-def pick_random(questionDict, pickedQuestions, isChoice):
+def pick_random(questionDict, pickedQuestions):
 	isLooping = True
 
 	# while loop to pick a random question
@@ -183,21 +183,13 @@ def pick_random(questionDict, pickedQuestions, isChoice):
 		# pick a random number between 0 and the length of the dictionary -1
 		randomNumber = random.randint(0, len(questionDict) - 1)
 		
-		# if the number is for choices use a value
-		if(isChoice):
+		randomChoice = list(questionDict.keys())[randomNumber]
 
-			# set the random choice to the corresponding value from the dictionary
-			randomChoice = list(questionDict.values())[randomNumber]
-
-		# if the number is for questions use a key
-		else:
-
-			# set the random choice to the corresponding key from the dictionary
-			randomChoice = list(questionDict.keys())[randomNumber]
-
-		# if the random choice is not in the pickedQuestions list, set isLooping to False
+		# if the random choice is not in the pickedQuestions dict, set isLooping to False
 		if(randomChoice not in pickedQuestions):
 			isLooping = False
+
+	print("choice: " + randomChoice)
 
 	# return the random choice
 	return randomChoice
@@ -206,19 +198,20 @@ def pick_random(questionDict, pickedQuestions, isChoice):
 def pick_choices(chosenQuestion, questionsDict):
 	choices = []
 	isLooping = True
-	isChoice = True
 
 	# pick 3 random choices
 	while(isLooping):
 
 		# pick a random choice using pick_random
-		randomChoice = pick_random(questionsDict, choices, isChoice)
+		randomChoice = pick_random(questionsDict, choices)
 
 		# if the random choice is not the correct answer, add it to the choices list
 		if(randomChoice != questionsDict[chosenQuestion]):
 
 			# add the random choice to the choices list
-			choices.append(randomChoice)
+
+			randChoice = questionsDict[randomChoice]
+			choices.append(randChoice)
 
 		# if the choices list has 3 choices, stop the loop
 		if(len(choices) == 3):
