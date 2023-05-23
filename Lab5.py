@@ -56,14 +56,16 @@ def main():
 		# pick a random question using the pick_random
 		chosenQuestion = pick_random(questionsDict, pickedQuestions)
 
+		chosenKey = list(questionsDict.keys())[list(questionsDict.values()).index(chosenQuestion)]
+
 		# add the chosen question to the pickedQuestions dict
-		pickedQuestions[chosenQuestion] = questionsDict[chosenQuestion]
+		questionsDict[chosenKey] = chosenQuestion
 
 		# pick 3 random choices and 1 correct choice using pick_choices
 		choices = pick_choices(chosenQuestion, questionsDict)
 
 		# create the question using create_question
-		question = create_question(chosenQuestion, choices)
+		question = create_question(chosenKey, choices)
 
 		# while the input is bad repeat this code
 		while(goodInput == False):
@@ -186,8 +188,6 @@ def create_dict(questions):
 def pick_random(questionsDict, pickedQuestions):
 	isLooping = True
 
-	print("pickedQuestions: " + str(pickedQuestions))
-
 	# while loop to pick a random question
 	while(isLooping):
 
@@ -195,9 +195,7 @@ def pick_random(questionsDict, pickedQuestions):
 		randomNumber = random.randint(0, len(questionsDict) - 1)
 		
 		# change the number to a key
-		randomChoice = list(questionsDict.keys())[randomNumber]
-
-		print("choice: " + randomChoice)
+		randomChoice = list(questionsDict.values())[randomNumber]
 
 		# if the random choice is not in the pickedQuestions dict, set isLooping to False
 		if(randomChoice not in pickedQuestions):
@@ -218,13 +216,12 @@ def pick_choices(chosenQuestion, questionsDict):
 		randomChoice = pick_random(questionsDict, choices)
 
 		#change the output from pick_random to a value instead of a key
-		randChoice = questionsDict[randomChoice]
 
 		# if the random choice is not the correct answer, add it to the choices list
-		if(randChoice != chosenQuestion):
+		if(randomChoice != chosenQuestion):
 
 			# add the random choice to the choices list
-			choices.append(randChoice)
+			choices.append(randomChoice)
 
 		# if the choices list has 3 choices, stop the loop
 		if(len(choices) == 3):
@@ -233,19 +230,17 @@ def pick_choices(chosenQuestion, questionsDict):
 	# pick a random number between 0 and 3
 	answerPlacement = random.randint(0, 3)
 
-	print(questionsDict[chosenQuestion])
-
 	# insert the correct answer at a random index in the choices list
-	choices.insert(answerPlacement, questionsDict[chosenQuestion])
+	choices.insert(answerPlacement, chosenQuestion)
 
 	# return the choices list
 	return choices
 
 # create the question
-def create_question(chosenQuestion, choices):
+def create_question(chosenKey, choices):
 
 	# create the question string using string concatenation
-	question = chosenQuestion + "\n" + "A. " + choices[0] + "\n" + "B. " + choices[1] + "\n" + "C. " + choices[2] + "\n" + "D. " + choices[3]
+	question = chosenKey + "\n" + "A. " + choices[0] + "\n" + "B. " + choices[1] + "\n" + "C. " + choices[2] + "\n" + "D. " + choices[3]
 
 	# return the question
 	return question
@@ -253,6 +248,7 @@ def create_question(chosenQuestion, choices):
 # get the question and choices and return them as a ascii value
 def get_question_input():
 	goodInput = False
+	asciiAnswer = 0
 
 	# get input
 	chosenAnswer = input("Enter Choice: ")
@@ -313,7 +309,7 @@ def check_answer(chosenAnswer, choices, questionsDict, chosenQuestion):
 		chrAnswer = choices[3]
 
 	# check if the answer is correct
-	if(chrAnswer == questionsDict[chosenQuestion]):
+	if(chrAnswer == chosenQuestion):
 
 		# if the answer is correct, set isCorrect to True
 		isCorrect = True
