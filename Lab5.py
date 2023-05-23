@@ -15,7 +15,6 @@ def main():
 	pickedQuestions = {}
 	choices = []
 	fileExists = True
-	isChoice = False
 
 	# print the welcome message
 	welcome_message()
@@ -208,9 +207,10 @@ def pick_choices(chosenQuestion, questionsDict):
 		# if the random choice is not the correct answer, add it to the choices list
 		if(randomChoice != questionsDict[chosenQuestion]):
 
-			# add the random choice to the choices list
-
+			#change the output from pick_random to a value instead of a key
 			randChoice = questionsDict[randomChoice]
+
+			# add the random choice to the choices list
 			choices.append(randChoice)
 
 		# if the choices list has 3 choices, stop the loop
@@ -218,7 +218,7 @@ def pick_choices(chosenQuestion, questionsDict):
 			isLooping = False
 
 	# pick a random number between 0 and 3
-	randomChoice = random.randint(0, 3)
+	anserPlacement = random.randint(0, 3)
 
 	# insert the correct answer at a random index in the choices list
 	choices.insert(randomChoice, questionsDict[chosenQuestion])
