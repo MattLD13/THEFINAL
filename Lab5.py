@@ -3,6 +3,14 @@
 # Unit 6
 # Quizlet CLI Basically
 
+# Honor Code - I have neither given nor received unauthorized aid on this assignment
+
+# Difficulties - I had many difficulties while writing this program. The issue that haunted me throughout this project was abstraction
+#				 in the pick_random function. I have re-written this function 8 times at this point. I started off with a seperate 
+#				 pick_question function but realized that was not the correct design. I then re-wrote it with pick_random having special
+#				 cases for picking choices or questions. Eventually I settled on my current design which is abstracted and able to work for
+#				 both without any changes.
+
 #IMPORTS
 import random
 
