@@ -22,7 +22,7 @@ def main():
 	# define variables
 	questionAmt = 0
 	score = 0
-	pickedQuestions = {}
+	pickedQuestions = []
 	choices = []
 	fileExists = True
 
@@ -58,8 +58,8 @@ def main():
 
 		chosenKey = list(questionsDict.keys())[list(questionsDict.values()).index(chosenQuestion)]
 
-		# add the chosen question to the pickedQuestions dict
-		questionsDict[chosenKey] = chosenQuestion
+		# add the chosen question to the pickedQuestions list
+		pickedQuestions.append(chosenQuestion)
 
 		# pick 3 random choices and 1 correct choice using pick_choices
 		choices = pick_choices(chosenQuestion, questionsDict)
@@ -93,6 +93,7 @@ def main():
 		else:
 			print("No, the correct answer is" + chosenQuestion + ".")
 
+		#line break becuase i like formatting
 		print()
 
 		# add 1 to the questionAmt
@@ -194,10 +195,10 @@ def pick_random(questionsDict, pickedQuestions):
 		# pick a random number between 0 and the length of the dictionary -1
 		randomNumber = random.randint(0, len(questionsDict) - 1)
 		
-		# change the number to a key
+		# change the number to a value
 		randomChoice = list(questionsDict.values())[randomNumber]
 
-		# if the random choice is not in the pickedQuestions dict, set isLooping to False
+		# if the random choice is not in the pickedQuestions list, set isLooping to False
 		if(randomChoice not in pickedQuestions):
 			isLooping = False
 
