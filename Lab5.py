@@ -91,7 +91,7 @@ def main():
 
 		# if the answer is incorrect, prints the correct answer
 		else:
-			print("No, the correct answer is " + questionsDict[chosenQuestion] + ".")
+			print("No, the correct answer is" + chosenQuestion + ".")
 
 		print()
 
