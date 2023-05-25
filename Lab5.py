@@ -25,6 +25,7 @@ def main():
 	pickedQuestions = []
 	choices = []
 	fileExists = True
+	questionsToPlay = 10
 
 	# print the welcome message
 	welcome_message()
@@ -47,8 +48,12 @@ def main():
 		# set the question value to 10 to not start the quiz
 		questionAmt = 10
 
+	if(len(questionsDict) < 10):
+		questionsToPlay = len(questionsDict)
+
+
 	# while loop to only play 10 questions
-	while(questionAmt < 10):
+	while(questionAmt < questionsToPlay):
 
 		# assume that input is bad
 		goodInput = False

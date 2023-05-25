@@ -4,9 +4,3 @@ apagar: to turn off
 prender: to turn on
 borrar: to erase, delete
 descargar: to download
-grabar: to record
-imprimir: to print
-impresora: printer
-descompuesto/a: not working; out of order
-lento/a: slow
-lleno/a: full
