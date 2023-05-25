@@ -48,11 +48,12 @@ def main():
 		# set the question value to 10 to not start the quiz
 		questionAmt = 10
 
+	# if the file has less than 10 questions change the amount of questions to play to the amount of questions in the file
 	if(len(questionsDict) < 10):
 		questionsToPlay = len(questionsDict)
 
 
-	# while loop to only play 10 questions
+	# while loop to only play 10 questions or the amount of questions in the file
 	while(questionAmt < questionsToPlay):
 
 		# assume that input is bad
